@@ -26,10 +26,10 @@ firebase.initializeApp(config);
  */
 function initApp() {
   // Listen for auth state changes.
-  document.getElementById('add-site').disabled = true;
   // [START authstatelistener]
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
+      document.getElementById('add-site').disabled = true;
       // // User is signed in.
       // var displayName = user.displayName;
       // var email = user.email;
@@ -46,6 +46,7 @@ function initApp() {
       // [END_EXCLUDE]
     } else {
       // Let's try to get a Google auth token programmatically.
+      document.getElementById('add-site').disabled = true;
       // [START_EXCLUDE]
       document.getElementById('quickstart-button').textContent = 'Sign-in with Google';
       document.getElementById('quickstart-sign-in-status').textContent = 'Signed out';
@@ -91,6 +92,8 @@ function startAuth(interactive) {
     }
   });
   document.getElementById('add-site').disabled = false;
+  chrome.contextMenus.create({"title":"Save for Sunday"});
+  chrome.contextMenus.onClicked(getData());
 }
 
 /**
