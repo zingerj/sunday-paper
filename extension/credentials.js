@@ -30,6 +30,7 @@ firestore.settings(settings);
  */
 function initApp() {
   // Listen for auth state changes.
+  document.getElementById('add-site').disabled = true;
   // [START authstatelistener]
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
@@ -130,6 +131,11 @@ function scrapeMedium() {
   });
 }
 
+function getData() {
+
+
+}
+
 /**
  * Start the auth flow and authorizes to Firebase.
  * @param{boolean} interactive True if the OAuth flow should request with an interactive mode.
@@ -169,10 +175,13 @@ function startAuth(interactive) {
  */
 function startSignIn() {
   if (firebase.auth().currentUser) {
+    console.log('currentUser');
     firebase.auth().signOut();
   } else {
+    console.log('false');
     startAuth(true);
   }
+  console.log('Neither');
 }
 
 window.onload = function() {
