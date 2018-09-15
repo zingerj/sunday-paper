@@ -1,0 +1,24 @@
+{
+  "name": "sunday-paper-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon index.js --exec babel-node"
+  },
+  "dependencies": {
+    "apollo-server-express": "^2.0.7",
+    "chalk": "^2.4.1",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "graphql": "^14.0.2",
+    "lodash": "^4.17.11",
+    "moment": "^2.22.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "nodemon": "^1.18.4"
+  }
+}
