@@ -1,12 +1,15 @@
 // TODO(DEVELOPER): Change the values below using values from the initialization snippet: Firebase Console > Overview > Add Firebase to your web app.
 // Initialize Firebase
+
 var config = {
-  apiKey: 'AIzaSyAMZ0lZoO0LyEgV8bp7neE3L2ZcwVf4Mus',
-  databaseURL: 'https://sunday-paper.firebaseio.com',
-  storageBucket: 'sunday-paper.appspot.com'
+  apiKey: "AIzaSyDuUOjt5r7wAl0f5WvRSLOSwDjxtzkVwXg",
+  authDomain: "sunday-paper-2018.firebaseapp.com",
+  databaseURL: "https://sunday-paper-2018.firebaseio.com",
+  projectId: "sunday-paper-2018",
+  storageBucket: "sunday-paper-2018.appspot.com",
+  messagingSenderId: "298992067325"
 };
 firebase.initializeApp(config);
-  
 /**
  * initApp handles setting up the Firebase context and registering
  * callbacks for the auth status.
@@ -23,18 +26,20 @@ firebase.initializeApp(config);
  */
 function initApp() {
   // Listen for auth state changes.
+  document.getElementById('add-site').disabled = true;
   // [START authstatelistener]
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-      // User is signed in.
-      var displayName = user.displayName;
-      var email = user.email;
-      var emailVerified = user.emailVerified;
-      var photoURL = user.photoURL;
-      var isAnonymous = user.isAnonymous;
-      var uid = user.uid;
-      var providerData = user.providerData;
-      // [START_EXCLUDE]
+      // // User is signed in.
+      // var displayName = user.displayName;
+      // var email = user.email;
+      // var emailVerified = user.emailVerified;
+      // var photoURL = user.photoURL;
+      // var isAnonymous = user.isAnonymous;
+      // var uid = user.uid;
+      // var providerData = user.providerData;
+      
+      // // [START_EXCLUDE]
       document.getElementById('quickstart-button').textContent = 'Sign out';
       document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
       document.getElementById('quickstart-account-details').textContent = JSON.stringify(user, null, '  ');
@@ -52,6 +57,11 @@ function initApp() {
   // [END authstatelistener]
 
   document.getElementById('quickstart-button').addEventListener('click', startSignIn, false);
+}
+
+function getData() {
+
+
 }
 
 /**
@@ -80,6 +90,7 @@ function startAuth(interactive) {
       console.error('The OAuth Token was null');
     }
   });
+  document.getElementById('add-site').disabled = false;
 }
 
 /**
@@ -88,10 +99,13 @@ function startAuth(interactive) {
 function startSignIn() {
   document.getElementById('quickstart-button').disabled = true;
   if (firebase.auth().currentUser) {
+    console.log('currentUser');
     firebase.auth().signOut();
   } else {
+    console.log('false');
     startAuth(true);
   }
+  console.log('Neither');
 }
 
 window.onload = function() {
