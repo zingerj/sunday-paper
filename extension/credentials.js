@@ -43,13 +43,11 @@ function initApp() {
       // [END_EXCLUDE]
     } else {
       // Let's try to get a Google auth token programmatically.
-      document.getElementById("add-site").disabled = true;
       // Disable add-site
       document.getElementById("add-site").disabled = true;
       document.getElementById("add-site").hidden = true;
       // [START_EXCLUDE]
-      document.getElementById("quickstart-button").textContent =
-        "Sign-in with Google";
+      document.getElementById("quickstart-button").textContent = "Sign-in with Google";
       // [END_EXCLUDE]
     }
   });
