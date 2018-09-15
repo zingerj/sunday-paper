@@ -8,8 +8,8 @@
       manifest.json provides metadata used when your web app is added to the
       homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
     -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
-    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+<!--     <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico"> -->
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -22,9 +22,59 @@
     <title>Sunday Paper</title>
   </head>
   <body>
-    <noscript>
-      You need to enable JavaScript to run this app.
-    </noscript>
+
+    <script src="https://www.gstatic.com/firebasejs/5.5.0/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyAMZ0lZoO0LyEgV8bp7neE3L2ZcwVf4Mus",
+            authDomain: "sunday-paper.firebaseapp.com",
+            databaseURL: "https://sunday-paper.firebaseio.com",
+            projectId: "sunday-paper",
+            storageBucket: "sunday-paper.appspot.com",
+            messagingSenderId: "794457487221"
+        };
+        firebase.initializeApp(config);
+        firebase.firestore().settings({ timestampsInSnapshots: true })
+    </script>
+
+    <script>
+        (async () => {
+            const db = firebase.firestore();
+            const usersCollection = db.collection('Users');
+            const usersSnapshot = await usersCollection.get();
+            const usersDocs = usersSnapshot.docs;
+            const userDoc = usersDocs[0];
+            const { name } = userDoc.data();
+            const papersCollection = userDoc.ref.collection('papers');
+            const papersSnapshot = await papersCollection.get();
+
+            const doc = await db.collection('Users').doc('o4Baar3S3yAc92JZ61TM').get();
+
+            console.log(doc.id, doc.data())
+
+            papersSnapshot.docs.forEach(doc => {
+                console.log(doc.id, doc.data())
+            })
+
+            console.log(name)
+
+        })();
+
+        async function handleButtonClick() {
+            const db = firebase.firestore();
+            const usersCollection = db.collection('Users');
+
+            const userRef = await usersCollection.add({ name: 'memesName' });
+            const paperRef = await userRef.collection('papers').add({ author: 'memes', content: 'memes', dates: 'memes', link: 'memes', timestamp:'memes', title: 'memes' })
+            console.log('ref', userRef)
+        }
+
+    </script>
+
+    <button onclick="handleButtonClick()">click me</button>    
+
+    
     <div id="root"></div>
     <!--
       This HTML file is a template.
