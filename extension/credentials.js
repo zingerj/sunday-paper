@@ -45,7 +45,6 @@ function initApp() {
       // Disable add-site 
       document.getElementById('add-site').disabled = true;
       document.getElementById('add-site').hidden = true;
-
       // [START_EXCLUDE]
       document.getElementById('quickstart-button').textContent = 'Sign-in with Google';
       document.getElementById('quickstart-sign-in-status').textContent = 'Signed out';
@@ -59,7 +58,6 @@ function initApp() {
 }
 
 function getData() {
-  console.log('Biic');
 }
 
 /**
