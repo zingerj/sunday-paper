@@ -59,7 +59,7 @@ function initApp() {
 }
 
 function getData() {
-  console.log('Biic');
+  console.log(scrapeMedium());
 }
 
 /**
@@ -108,3 +108,23 @@ window.onload = function() {
   initApp();
   document.getElementById('add-site').addEventListener('click', getData);
 };
+
+function scrapeMedium() {
+  var el = document.createElement( 'html' );
+  el.innerHTML = document.documentElement.innerHTML;
+  var p = el.getElementsByTagName( 'p' ); 
+  var header = el.getElementsByTagName( 'h1' );
+  var x = "";
+  
+  for(var i=0;i < y.length; i++){
+     x += p[i].textContent + "\n";
+  }
+  return {
+      author: "",
+      content: "",
+      date: new Date(),
+      link: window.location.href,
+      timestamp: "",
+      title: ""
+  };
+}
