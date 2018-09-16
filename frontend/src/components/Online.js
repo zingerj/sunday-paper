@@ -21,7 +21,7 @@ class Online extends Component {
                             Extra! Extra!<br />
                             Printing your Sunday Paper...
                         </LoadingText>
-                        <LoadingImage>📰</LoadingImage>
+                        <LoadingImage><span role="img" aria-label="newspaper">📰</span></LoadingImage>
                     </LoadingContainer>
                     : <LoadingContainer>
                         <LoadingText>
@@ -30,7 +30,7 @@ class Online extends Component {
                         <IconAppear>
                             <FontAwesomeIcon
                                 icon={faCheckCircle}
-                                size='4x'
+                                size='5x'
                                 color='green'
                             />
                         </IconAppear>
