@@ -129,8 +129,13 @@ function scrapeMedium() {
   });
 }
 
-function getData() {
-  console.log(scrapeMedium());
+function scrapeMedium() {
+  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    var tab = tabs[0];
+    var tabID = tab.id;
+    // Gets the dom data as a json with title, author, content, date posted, and link to article 
+    chrome.tabs.sendMessage(tabID, {text: 'getDom'}, (x) => {console.log(x)});
+  });
 }
 
 /**
