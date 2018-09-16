@@ -130,7 +130,7 @@ function scrapeMedium() {
 }
 
 function getData() {
-  console.log('Biic');
+  console.log(scrapeMedium());
 }
 
 /**
