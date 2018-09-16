@@ -38,7 +38,7 @@ function initApp() {
       document.getElementById("add-site").disabled = false;
       document.getElementById("add-site").hidden = false;
       // // [START_EXCLUDE]
-      document.getElementById('quickstart-button').textContent = 'Sign out';
+      document.getElementById("quickstart-button").textContent = "Sign out";
       // [END_EXCLUDE]
     } else {
       // Let's try to get a Google auth token programmatically.
@@ -47,60 +47,87 @@ function initApp() {
       document.getElementById("add-site").disabled = true;
       document.getElementById("add-site").hidden = true;
       // [START_EXCLUDE]
-      document.getElementById('quickstart-button').textContent = 'Sign-in with Google';
+      document.getElementById("quickstart-button").textContent =
+        "Sign-in with Google";
       // [END_EXCLUDE]
     }
   });
   // [END authstatelistener]
-  document.getElementById('quickstart-button').addEventListener('click', startSignIn, false);
+  document
+    .getElementById("quickstart-button")
+    .addEventListener("click", startSignIn, false);
   // document.getElementById('add-site').addEventListener('click', scrapeMedium, false);
-  document.getElementById('add-site').addEventListener('click', scrapeMedium, false);
+  document
+    .getElementById("add-site")
+    .addEventListener("click", scrapeMedium, false);
 }
 
 function scrapeMedium() {
-  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+  chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
     var tab = tabs[0];
     var tabID = tab.id;
-    // Gets the dom data as a json with title, author, content, date posted, and link to article 
-    chrome.tabs.sendMessage(tabID, {text: 'getDom'}, (x) => {console.log(x)});
+    // Gets the dom data as a json with title, author, content, date posted, and link to article
+    chrome.tabs.sendMessage(tabID, { text: "getDom" }, x => {
+      var user = firebase.auth().currentUser;
+      console.log(user.uid);
+      console.log(user.displayName);
+
+      var querySize = 0;
+
+      firestore
+        .collection("users")
+        .doc(user.uid)
+        .collection("papers")
+        .doc("LOW4ylqnZpNoCSXJiVYq")
+        .collection("articles")
+        .doc()
+        .set({
+          title: x.title,
+          author: x.author,
+          date: x.date,
+          content: x.content,
+          link: x.link,
+          timestamp: x.timestamp
+        });
+
+      // firestore
+      //   .collection("users")
+      //   .doc(user.uid)
+      //   .collection("papers")
+      //   .get()
+      //   .then(query => {
+      //     var papers = [];
+      //     querySize = query.size;
+      //     console.log(querySize);
+      //     console.log(query);
+
+      //     query.forEach(doc => {
+      //       papers.push(doc);
+      //     });
+
+      //     console.log(papers[0]);
+
+      //     if (querySize > 0) {
+      //       firestore
+      //         .collection("users")
+      //         .doc(user.uid)
+      //         .collection("papers")
+      //         .doc(papers[0].id)
+      //         .collection("articles")
+      //         .doc()
+      //         .set({
+      //           title: x[title],
+      //           author: x[author],
+      //           date: x[date],
+      //           content: x[content],
+      //           link: x[link],
+      //           timestamp: x[timestamp]
+      //         });
+      //     } else {
+      //     }
+      //   });
+    });
   });
-
-}
-
-async function getData() {
-  var user = firebase.auth().currentUser;
-  console.log(user.uid);
-
-  var sendEmail = firebase.functions().httpsCallable("sendEmail");
-
-  sendEmail({
-    content: "lol",
-    subject: "lol",
-    email: "panchaldpranav@gmail.com"
-  }).then(
-    function(result) {
-      // Read result of the Cloud Function.
-      console.log("Lol");
-      // ...
-    },
-    err => console.error
-  );
-
-  /*
-
-  await firestore
-    .collection("users")
-    .doc(user.uid)
-    .collection("papers")
-    .doc()
-    .collection("articles")
-    .doc()
-    .set({ title: "yes" });
-
-  await firestore
-    .collection("users")
-    .doc(user.uid)
-    .set({ name: "swag" });*/
 }
 
 /**
@@ -132,8 +159,8 @@ function startAuth(interactive) {
       console.error("The OAuth Token was null");
     }
   });
-  document.getElementById('add-site').disabled = false;
-  chrome.contextMenus.create({"title":"Save for Sunday"});
+  document.getElementById("add-site").disabled = false;
+  chrome.contextMenus.create({ title: "Save for Sunday" });
   chrome.contextMenus.onClicked(scrapeMedium());
 }
 
@@ -150,4 +177,4 @@ function startSignIn() {
 
 window.onload = function() {
   initApp();
-}
+};
