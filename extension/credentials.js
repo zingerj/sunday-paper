@@ -176,8 +176,8 @@ function startAuth(interactive) {
       console.error("The OAuth Token was null");
     }
   });
-  document.getElementById("add-site").disabled = false;
-  chrome.contextMenus.create({ title: "Save for Sunday" });
+  document.getElementById('add-site').disabled = false;
+  chrome.contextMenus.create({"title":"Save for Sunday"});
   chrome.contextMenus.onClicked(scrapeMedium());
 }
 
