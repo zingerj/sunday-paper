@@ -130,8 +130,7 @@ function scrapeMedium() {
 }
 
 function getData() {
-
-
+  console.log('Biic');
 }
 
 /**
@@ -173,13 +172,10 @@ function startAuth(interactive) {
  */
 function startSignIn() {
   if (firebase.auth().currentUser) {
-    console.log('currentUser');
     firebase.auth().signOut();
   } else {
-    console.log('false');
     startAuth(true);
   }
-  console.log('Neither');
 }
 
 window.onload = function() {
