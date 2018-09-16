@@ -5,13 +5,18 @@ import loSto from 'store'
 import { LO_STO } from '../lib/constants'
 
 class Paper extends Component {
-    state = {
-        loading: !loSto.get(LO_STO.ARTICLES),
-        offline: !window.navigator.onLine,
-        articles: loSto.get(LO_STO.ARTICLES)
+    constructor (props) {
+        super(props)
+
+        this.state = {
+            offline: !window.navigator.onLine,
+            error: false,
+            loading: !loSto.get(`${LO_STO.ARTICLES}/${props.userId}/${props.paperId}`),
+            articles: loSto.get(`${LO_STO.ARTICLES}/${props.userId}/${props.paperId}`)
+        }
     }
 
-    componentDidMount() {
+    componentDidMount () {
         window.addEventListener('online', this.updateConnectionStatus)
         window.addEventListener('offline', this.updateConnectionStatus)
 
@@ -33,14 +38,24 @@ class Paper extends Component {
         paperRef.get().then(collection => {
             const articles = collection && collection.docs && collection.docs.map(d => d.data())
 
-            loSto.set(LO_STO.ARTICLES, articles)
+            if (articles.length) {
+                loSto.set(`${LO_STO.ARTICLES}/${userId}/${paperId}`, articles)
 
-            setTimeout(() => {
-                this.setState({ loading: false, articles })
-            }, 1000)
+                setTimeout(() => {
+                    this.setState({ loading: false, articles })
+                }, 1000)
+            } else {
+                setTimeout(() => {
+                    this.setState({ loading: false, error: true })
+                }, 1000)
+            }
+
         }).catch(err => {
-            this.setState({ loading: false })
             console.error(err)
+            
+            setTimeout(() => {
+                this.setState({ loading: false, error: true })
+            }, 1000)
         })
     }
 
@@ -53,7 +68,7 @@ class Paper extends Component {
     }
 
     render () {
-        const { offline, loading, articles } = this.state
+        const { offline, loading, error, articles } = this.state
 
         if (offline && articles) {
             return <Content articles={articles} />
@@ -61,7 +76,7 @@ class Paper extends Component {
             return 'Please allow your paper to finish printing! (Turn your internet back on)'
         }
         
-        return <Online loading={loading} />
+        return <Online loading={loading} error={error} />
     }
 }
 
