@@ -10,6 +10,10 @@ var config = {
   messagingSenderId: "298992067325"
 };
 firebase.initializeApp(config);
+
+const firestore = firebase.firestore();
+const settings = { /* your settings... */ timestampsInSnapshots: true };
+firestore.settings(settings);
 /**
  * initApp handles setting up the Firebase context and registering
  * callbacks for the auth status.
@@ -63,15 +67,40 @@ function scrapeMedium() {
 
 }
 
-function getData() {
+async function getData() {
   var user = firebase.auth().currentUser;
-  console.log(user);
+  console.log(user.uid);
 
-  const userRef = await firebase.firestore().collection('users').doc(user.uid).add({ name: 'swag' })
+  var sendEmail = firebase.functions().httpsCallable("sendEmail");
 
-  const paper = await userRef.collection('papers').add({
-    author: 'memes', content: 'memes', date: 'memes', link: 'memes', timestamp: 'memes', title: 'memes'
-  })
+  sendEmail({
+    content: "lol",
+    subject: "lol",
+    email: "panchaldpranav@gmail.com"
+  }).then(
+    function(result) {
+      // Read result of the Cloud Function.
+      console.log("Lol");
+      // ...
+    },
+    err => console.error
+  );
+
+  /*
+
+  await firestore
+    .collection("users")
+    .doc(user.uid)
+    .collection("papers")
+    .doc()
+    .collection("articles")
+    .doc()
+    .set({ title: "yes" });
+
+  await firestore
+    .collection("users")
+    .doc(user.uid)
+    .set({ name: "swag" });*/
 }
 
 /**

@@ -1,4 +1,5 @@
 const functions = require("firebase-functions");
+const nodemailer = require("nodemailer");
 
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
@@ -22,7 +23,7 @@ exports.sendEmail = functions.https.onCall((data, context) => {
   };
   const transporter = nodemailer.createTransport(smtpConfig);
   const options = {
-    from: '"Robots" <robots@deltahacks.com>',
+    from: '"Sunday Paper" <robots@deltahacks.com>',
     to: `${email}`,
     subject: `${subject}`,
     text: `${content}`
