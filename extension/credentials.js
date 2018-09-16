@@ -31,14 +31,9 @@ function initApp() {
     if (user) {
       document.getElementById('add-site').disabled = true;
       // // User is signed in.
-      // var displayName = user.displayName;
-      // var email = user.email;
-      // var emailVerified = user.emailVerified;
-      // var photoURL = user.photoURL;
-      // var isAnonymous = user.isAnonymous;
-      // var uid = user.uid;
-      // var providerData = user.providerData;
-      
+      // Enable the add site button
+      document.getElementById('add-site').disabled = false;
+      document.getElementById('add-site').hidden = false;
       // // [START_EXCLUDE]
       document.getElementById('quickstart-button').textContent = 'Sign out';
       document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
@@ -47,13 +42,16 @@ function initApp() {
     } else {
       // Let's try to get a Google auth token programmatically.
       document.getElementById('add-site').disabled = true;
+      // Disable add-site 
+      document.getElementById('add-site').disabled = true;
+      document.getElementById('add-site').hidden = true;
+
       // [START_EXCLUDE]
       document.getElementById('quickstart-button').textContent = 'Sign-in with Google';
       document.getElementById('quickstart-sign-in-status').textContent = 'Signed out';
       document.getElementById('quickstart-account-details').textContent = 'null';
       // [END_EXCLUDE]
     }
-    document.getElementById('quickstart-button').disabled = false;
   });
   // [END authstatelistener]
 
@@ -61,8 +59,7 @@ function initApp() {
 }
 
 function getData() {
-
-
+  console.log('Biic');
 }
 
 /**
@@ -100,17 +97,14 @@ function startAuth(interactive) {
  * Starts the sign-in process.
  */
 function startSignIn() {
-  document.getElementById('quickstart-button').disabled = true;
   if (firebase.auth().currentUser) {
-    console.log('currentUser');
     firebase.auth().signOut();
   } else {
-    console.log('false');
     startAuth(true);
   }
-  console.log('Neither');
 }
 
 window.onload = function() {
   initApp();
+  document.getElementById('add-site').addEventListener('click', getData);
 };
