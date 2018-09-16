@@ -1,21 +1,31 @@
 import React, { Component, Fragment } from 'react'
+import {
+    ContentContainer,
+    Header,
+    Subtitle,
+    Footer,
+    Divider
+} from './styled'
+import { Article } from '.'
 
 class Content extends Component {
     render () {
         const { articles } = this.props
 
-        const articleEls = articles && articles.map(a => (
-            <Fragment key={a.link}>
-                <h1>{a.title}</h1>
-                <h3>{a.author}</h3>
-                <p>{a.content}</p>
+        const articleEls = articles && articles.map((a, i) => (
+            <Fragment key={i}>
+                <Article data={a} />
+                {i !== articles.length - 1 && <Divider />}
             </Fragment>
         ))
 
         return (
-            <div>
+            <ContentContainer>
+                <Header>Your Sunday Paper</Header>
+                <Subtitle>Sunday, September 16, 2018</Subtitle>
                 {articleEls}
-            </div>
+                <Footer><span role="img" aria-label="wave">👋🏻</span> See you next week!</Footer>
+            </ContentContainer>
         )
     }
 }

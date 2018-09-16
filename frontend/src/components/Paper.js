@@ -58,7 +58,7 @@ class Paper extends Component {
         if (offline && articles) {
             return <Content articles={articles} />
         } else if (offline && !articles) {
-            return 'Please allow your paper to finish printing!'
+            return 'Please allow your paper to finish printing! (Turn your internet back on)'
         }
         
         return <Online loading={loading} />
