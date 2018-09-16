@@ -43,7 +43,6 @@ function initApp() {
       // Disable add-site 
       document.getElementById('add-site').disabled = true;
       document.getElementById('add-site').hidden = true;
-
       // [START_EXCLUDE]
       document.getElementById('quickstart-button').textContent = 'Sign-in with Google';
       // [END_EXCLUDE]
