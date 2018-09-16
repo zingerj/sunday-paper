@@ -136,6 +136,12 @@ export const Frost = styled.div`
   height: 100%;
   width: 100%;
   background: linear-gradient(rgba(255,255,255,0) 50%, rgba(255,255,255,1) 95%);
+  opacity: ${({ expanded }) => expanded ? '0' : '1'};
+  transition: all 0.3s;
+
+  ${ArticleContainer}:hover & {
+    opacity: 1;
+  }
 `
 
 export const ReadMore = styled.div`
