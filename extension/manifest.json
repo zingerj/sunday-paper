@@ -13,9 +13,15 @@
     "background": {
       "page": "background.html"
     },
+    "content_scripts":[{
+      "matches" : ["https://medium.com/*"],
+      "js" : ["mediumScraper.js"]
+    }],
     "permissions": [
       "identity",
-      "contextMenus"
+      "contextMenus",
+      "tabs",
+      "activeTab"
     ],
     "content_security_policy":"script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com; object-src 'self'",
     "oauth2": {

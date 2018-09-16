@@ -33,4 +33,6 @@ function initApp() {
 
 window.onload = function() {
   initApp();
+  console.log('app loaded');
 };
+
