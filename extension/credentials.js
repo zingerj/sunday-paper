@@ -36,8 +36,6 @@ function initApp() {
       document.getElementById('add-site').hidden = false;
       // // [START_EXCLUDE]
       document.getElementById('quickstart-button').textContent = 'Sign out';
-      document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
-      document.getElementById('quickstart-account-details').textContent = JSON.stringify(user, null, '  ');
       // [END_EXCLUDE]
     } else {
       // Let's try to get a Google auth token programmatically.
@@ -47,17 +45,22 @@ function initApp() {
       document.getElementById('add-site').hidden = true;
       // [START_EXCLUDE]
       document.getElementById('quickstart-button').textContent = 'Sign-in with Google';
-      document.getElementById('quickstart-sign-in-status').textContent = 'Signed out';
-      document.getElementById('quickstart-account-details').textContent = 'null';
       // [END_EXCLUDE]
     }
   });
   // [END authstatelistener]
-
   document.getElementById('quickstart-button').addEventListener('click', startSignIn, false);
+  // document.getElementById('add-site').addEventListener('click', scrapeMedium, false);
+  document.getElementById('add-site').addEventListener('click', scrapeMedium, false);
 }
 
-function getData() {
+function scrapeMedium() {
+  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    var tab = tabs[0];
+    var tabID = tab.id;
+    // Gets the dom data as a json with title, author, content, date posted, and link to article 
+    chrome.tabs.sendMessage(tabID, {text: 'getDom'}, (x) => {console.log(x)});
+  });
 }
 
 /**
@@ -88,7 +91,7 @@ function startAuth(interactive) {
   });
   document.getElementById('add-site').disabled = false;
   chrome.contextMenus.create({"title":"Save for Sunday"});
-  chrome.contextMenus.onClicked(getData());
+  chrome.contextMenus.onClicked(scrapeMedium());
 }
 
 /**
@@ -104,5 +107,4 @@ function startSignIn() {
 
 window.onload = function() {
   initApp();
-  document.getElementById('add-site').addEventListener('click', getData);
-};
+}
