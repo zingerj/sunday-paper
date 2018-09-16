@@ -93,13 +93,16 @@ class Article extends Component {
 
     render () {
         const { data } = this.props
-
-        console.log({ expanded: this.state.expanded })
+        const { expanded } = this.state
         
         return (
-            <ArticleContainer id={data.link} expanded={this.state.expanded} onClick={this.state.expanded ? this.collapse : this.expand}>
-                {!this.state.expanded && <Frost />}
-                {!this.state.expanded && <ReadMore>Read More</ReadMore>}
+            <ArticleContainer
+                id={data.link}
+                expanded={expanded}
+                onClick={expanded ? this.collapse : this.expand}
+            >
+                <Frost expanded={expanded} />
+                <ReadMore>{expanded ? 'Read Less' : 'Read More'}</ReadMore>
                 <ArticleTitle>{data.title.trim()}</ArticleTitle>
                 <ArticleAuthor>{`by ${data.author.trim()}`}</ArticleAuthor>
                 <ArticleContent>{data.content.trim()}</ArticleContent>
