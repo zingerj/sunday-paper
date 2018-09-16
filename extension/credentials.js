@@ -73,6 +73,15 @@ function scrapeMedium() {
 
       var querySize = 0;
 
+      firestore.collection("users").doc(user.uid).set({
+        name: user.displayName,
+        email: user.email
+      })
+
+      firestore.collection("users").doc(user.uid).collection("papers").doc("LOW4ylqnZpNoCSXJiVYq").set({
+        week: 1
+      })
+
       firestore
         .collection("users")
         .doc(user.uid)
@@ -129,14 +138,14 @@ function scrapeMedium() {
   });
 }
 
-function scrapeMedium() {
-  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-    var tab = tabs[0];
-    var tabID = tab.id;
-    // Gets the dom data as a json with title, author, content, date posted, and link to article 
-    chrome.tabs.sendMessage(tabID, {text: 'getDom'}, (x) => {console.log(x)});
-  });
-}
+// function scrapeMedium() {
+//   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+//     var tab = tabs[0];
+//     var tabID = tab.id;
+//     // Gets the dom data as a json with title, author, content, date posted, and link to article 
+//     chrome.tabs.sendMessage(tabID, {text: 'getDom'}, (x) => {console.log(x)});
+//   });
+// }
 
 /**
  * Start the auth flow and authorizes to Firebase.
